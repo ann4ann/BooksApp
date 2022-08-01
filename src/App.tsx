@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import BooksList from "./components/UI/Books/BooksList";
+import BookShelf from "./components/UI/BookShelves/BookShelf";
+import { сategories } from "./components/UI/BookShelves/category";
 import { IBook, IBookPageData } from "./types/types";
 
 function App() {
@@ -17,7 +19,7 @@ function App() {
         `https://gutendex.com/books/?page=${page}`
       );
       setBooks(response.data.results);
-      setPageCount(response.data.count);
+      setPageCount(response.data.count / response.data.results.length);
       console.log(response.data);
     } catch (e) {
       console.log(e);
@@ -32,13 +34,14 @@ function App() {
   };
   const pageDecrementHandler = () => {
     if (page > 1) {
-      setPage((prevState) => prevState + 1);
+      setPage((prevState) => prevState - 1);
       // fetchBooks();
     }
   };
 
   return (
     <div className="bg-zinc-800">
+      <BookShelf categoryProps={сategories[0]} />
       <BooksList
         books={books}
         page={page}

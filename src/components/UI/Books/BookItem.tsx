@@ -7,9 +7,9 @@ interface BookItemProps {
 
 const BookItem: FC<BookItemProps> = ({ book }) => {
   return (
-    <div className="my-3 mx-4 w-56 h-72 flex flex-col justify-between rounded-lg relative ">
+    <div className="my-3 mx-4 w-56 h-72 flex flex-col rounded-lg relative overflow-hidden">
       <img
-        className="absolute w-full h-full rounded-lg"
+        className="absolute w-56 h-auto rounded-lg"
         src={book?.formats["image/jpeg"]?.replace("small.jpg", "medium.jpg")}
         alt="img"
       />

@@ -19,7 +19,7 @@ const BooksList: FC<BooksListProps> = ({
   pageDecrement,
 }) => {
   return (
-    <div className=" m-auto max-w-6xl">
+    <div className="m-auto max-w-6xl">
       <h1 className="text-2xl text-white text-center uppercase p-4">Книги</h1>
       <PageNums
         currentPage={page}
