@@ -40,7 +40,7 @@ function App() {
   };
 
   return (
-    <div className="bg-zinc-800">
+    <div className="bg-zinc-800 py-5 px-7">
       <BookShelf categoryProps={сategories[0]} />
       <BooksList
         books={books}

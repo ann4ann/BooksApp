@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import { IBook, IBookPageData } from "../../../types/types";
 import BookItem from "../Books/BookItem";
 import { categoryProps } from "./category";
@@ -10,9 +10,28 @@ interface BookShelfProps {
 
 const BookShelf: FC<BookShelfProps> = ({ categoryProps }) => {
   const [books, setBooks] = useState<IBook[]>([]);
+  const [shelfWidth, setShelfWidth] = useState<number>(1);
+  const resizeObserver = useRef<ResizeObserver>(
+    new ResizeObserver((entries: ResizeObserverEntry[]) => {
+      for (let entry of entries) {
+        setShelfWidth(entry.contentRect.width);
+      }
+    })
+  );
+  const shelfRef = useCallback(
+    (node: HTMLDivElement) => {
+      if (node !== null) {
+        resizeObserver.current.observe(node);
+        //   setShelfWidth(node.getBoundingClientRect().width);
+        //   console.log(shelfWidth);
+      }
+    },
+    [resizeObserver.current]
+  );
   useEffect(() => {
     fetchBooks();
   }, []);
+
   const fetchBooks = async () => {
     const response = await axios.get<IBookPageData>(
       `https://gutendex.com/books/?page=1&topic=${categoryProps.searchParams}`
@@ -21,7 +40,7 @@ const BookShelf: FC<BookShelfProps> = ({ categoryProps }) => {
   };
 
   return (
-    <div className="m-auto max-w-6xl relative">
+    <div ref={shelfRef} className="m-auto max-w-5xl relative">
       <div className="w-full py-3 px-5 flex justify-between bg-lime-400">
         <h1 className="text-2xl text-white text-center uppercase">
           {categoryProps.title}
@@ -29,7 +48,7 @@ const BookShelf: FC<BookShelfProps> = ({ categoryProps }) => {
         <button className="bg-slate-200 px-3 rounded-md">Перейти</button>
       </div>
 
-      <div className="w-full py-2 px-5 bg-yellow-400 overflow-x-scroll">
+      <div className="w-full py-2 bg-yellow-400 overflow-x-scroll">
         <div className="flex min-w-min">
           {books.map((book) => (
             <BookItem key={book.id} book={book} />
