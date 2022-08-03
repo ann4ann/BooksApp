@@ -7,14 +7,16 @@ interface BookItemProps {
 
 const BookItem: FC<BookItemProps> = ({ book }) => {
   return (
-    <div className="my-3 mx-4 w-56 h-72 flex flex-col rounded-lg relative overflow-hidden">
-      <img
-        className="absolute w-56 h-auto rounded-lg"
-        src={book?.formats["image/jpeg"]?.replace("small.jpg", "medium.jpg")}
-        alt="img"
-      />
-      <div className="p-4 h-24 bg-slate-700 bg-opacity-80 rounded-t-lg z-10">
-        <h2 className="text-xl text-orange-50 h-full overflow-y-clip">
+    <div className="my-3 mx-4 w-56 h-72 flex flex-col rounded-lg relative bg-slate-600 bg-opacity-25 overflow-hidden">
+      {book?.formats["image/jpeg"] && (
+        <img
+          className="absolute w-56 h-auto rounded-lg"
+          src={book?.formats["image/jpeg"]?.replace("small.jpg", "medium.jpg")}
+          alt="img"
+        />
+      )}
+      <div className="p-4 max-h-32 bg-slate-700 bg-opacity-80 rounded-t-lg z-10">
+        <h2 className="text-xl font-semibold text-orange-50 h-full overflow-y-clip">
           {book?.title}
         </h2>
       </div>
