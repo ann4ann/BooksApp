@@ -1,25 +1,26 @@
 // ---------- Books -----------
+// OpenLibAPI
+// часть  IBookPageData  IBook
 export interface IAuthor {
+  key: string; // /authors/OL10968A
   name: string;
-  birth_year: number;
 }
 
-export interface IFormats {
-  ["image/jpeg"]: string;
-  ["text/html"]: string;
-}
-
+// OpenLibAPI
+// часть IBookPageData
 export interface IBook {
-  id: number;
+  key: string;
   title: string;
+  cover_id: number;
   authors: IAuthor[];
-  formats: IFormats;
 }
 
+// OpenLibAPI
+// URL  https://openlibrary.org/subjects/arts.json?limit=30&offset=2
 export interface IBookPageData {
-  count: number;
-  next: string;
-  previous: string;
-  results: IBook[];
+  key: string; //адрес после   openlibrary.org
+  name: string; // название темы
+  work_count: number;
+  works: IBook[];
 }
 // ---------- ___ -----------

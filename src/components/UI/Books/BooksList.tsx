@@ -20,7 +20,9 @@ const BooksList: FC<BooksListProps> = ({
 }) => {
   return (
     <div className="m-auto max-w-6xl">
-      <h1 className="text-2xl text-white text-center uppercase p-4">Книги</h1>
+      <h1 className="text-2xl text-white text-center uppercase p-4">
+        Лидеры продаж
+      </h1>
       <PageNums
         currentPage={page}
         pagesCount={pageCount}
@@ -29,7 +31,7 @@ const BooksList: FC<BooksListProps> = ({
       />
       <div className="flex justify-center flex-wrap">
         {books.map((book) => (
-          <BookItem key={book.id} book={book} />
+          <BookItem key={book.key} book={book} />
         ))}
       </div>
       <PageNums

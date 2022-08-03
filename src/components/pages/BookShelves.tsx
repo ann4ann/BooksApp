@@ -6,8 +6,9 @@ const BookShelves = () => {
   return (
     <div>
       <p className="text-white block">BookShelves</p>
-
-      <BookShelf categoryProps={сategories[0]} />
+      {сategories.map((item) => (
+        <BookShelf categoryProps={item} key={item.title} />
+      ))}
     </div>
   );
 };

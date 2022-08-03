@@ -9,34 +9,36 @@ import { IBook, IBookPageData } from "./types/types";
 
 function App() {
   const [books, setBooks] = useState<IBook[]>([]);
-  const [page, setPage] = useState<number>(1);
-  const [pageCount, setPageCount] = useState<number>(1);
+  const [limit, setLimit] = useState<number>(6);
+  const [offset, setOffset] = useState<number>(0);
+  const [worksCount, setWorksCount] = useState<number>(1);
   useEffect(() => {
     fetchBooks();
-  }, [page]);
+  }, [offset]);
 
   async function fetchBooks() {
     try {
       const response = await axios.get<IBookPageData>(
-        `https://gutendex.com/books/?page=${page}`
+        // `https://gutendex.com/books/?page=${page}`
+        `https://openlibrary.org/subjects/bestseller.json?limit=${limit}&offset=${offset}`
       );
-      setBooks(response.data.results);
-      setPageCount(response.data.count / response.data.results.length);
-      console.log(response.data);
+      setBooks(response.data.works);
+      setWorksCount(response.data.work_count);
+      console.log(response.data.work_count);
     } catch (e) {
       console.log(e);
     }
   }
 
   const pageIncrementHandler = () => {
-    if (page < pageCount) {
-      setPage((prevState) => prevState + 1);
+    if (offset + limit < worksCount) {
+      setOffset((prevState) => prevState + limit);
       // fetchBooks();
     }
   };
   const pageDecrementHandler = () => {
-    if (page > 1) {
-      setPage((prevState) => prevState - 1);
+    if (offset > limit) {
+      setOffset((prevState) => prevState - limit);
       // fetchBooks();
     }
   };
@@ -54,8 +56,8 @@ function App() {
               element={
                 <BooksList
                   books={books}
-                  page={page}
-                  pageCount={pageCount}
+                  page={(offset + limit) / limit}
+                  pageCount={Math.round(worksCount / limit)}
                   pageIncrement={pageIncrementHandler}
                   pageDecrement={pageDecrementHandler}
                 />

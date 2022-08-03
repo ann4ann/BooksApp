@@ -36,10 +36,11 @@ const BookShelf: FC<BookShelfProps> = ({ categoryProps }) => {
 
   const fetchBooks = async () => {
     const response = await axios.get<IBookPageData>(
-      `https://gutendex.com/books/?page=1&topic=${categoryProps.searchParams}`
+      // `https://gutendex.com/books/?page=1&topic=${categoryProps.searchParams}`
+      `https://openlibrary.org/subjects/${categoryProps.searchParams}.json?limit=8`
     );
-    setBooks(response.data.results.slice(0, 6));
-    setBooksCount(response.data.count);
+    setBooks(response.data.works);
+    setBooksCount(response.data.work_count);
   };
 
   const handleScrollNext = () => {
@@ -51,7 +52,7 @@ const BookShelf: FC<BookShelfProps> = ({ categoryProps }) => {
   return (
     <div
       // ref={shelfRef}
-      className="m-auto max-w-5xl relative"
+      className="m-auto max-w-5xl relative mb-4"
     >
       <div className="w-full py-3 px-5 flex justify-between bg-lime-400 rounded-t-sm">
         <h1 className="text-2xl text-white text-center uppercase">
@@ -68,7 +69,7 @@ const BookShelf: FC<BookShelfProps> = ({ categoryProps }) => {
             </div>
           )}
           {books.map((book) => (
-            <BookItem key={book.id} book={book} />
+            <BookItem key={categoryProps.title + book.key} book={book} />
           ))}
           <div className="my-auto mx-4 w-40 h-40 relative rounded-full bg-white border border-gray-400 bg-opacity-50 hover:animate-pulse hover:bg-lime-400 cursor-pointer">
             <p className="inline-block absolute text-center top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">

@@ -8,10 +8,10 @@ interface BookItemProps {
 const BookItem: FC<BookItemProps> = ({ book }) => {
   return (
     <div className="my-3 mx-4 w-56 h-72 flex flex-col rounded-lg relative bg-slate-600 bg-opacity-25 overflow-hidden">
-      {book?.formats["image/jpeg"] && (
+      {book?.cover_id && (
         <img
           className="absolute w-56 h-auto rounded-lg"
-          src={book?.formats["image/jpeg"]?.replace("small.jpg", "medium.jpg")}
+          src={`https://covers.openlibrary.org/b/id/${book.cover_id}-M.jpg`}
           alt="img"
         />
       )}
